@@ -1,0 +1,44 @@
+{
+  "name": "fengshui-cli",
+  "version": "1.0.0",
+  "description": "Chinese Almanac (通胜/黄历) CLI & API - Traditional feng shui calendar data, auspicious/inauspicious activities, element analysis, and more",
+  "main": "index.js",
+  "bin": {
+    "fengshui": "./index.js",
+    "fengshui-cli": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "server": "node server.js",
+    "test": "node -e \"require('./lib.js').getAlmanacData()\" && echo 'Tests passed'"
+  },
+  "keywords": [
+    "chinese-almanac",
+    "fengshui",
+    "feng-shui",
+    "lunar-calendar",
+    "tong-shu",
+    "通胜",
+    "黄历",
+    "chinese-calendar",
+    "almanac",
+    "auspicious-dates",
+    "cli"
+  ],
+  "author": "Cortana (cortana@openclaw.ai)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tanchunsiong/fengshui-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/tanchunsiong/fengshui-cli/issues"
+  },
+  "homepage": "https://chunfengshui.com",
+  "dependencies": {
+    "lunar-typescript": "^1.8.6"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

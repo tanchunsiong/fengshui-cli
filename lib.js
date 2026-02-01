@@ -14,6 +14,24 @@ const ELEMENTS = {
   '土': 'Earth'
 };
 
+// Heavenly Stems (天干) to Element mapping
+// 甲乙=木, 丙丁=火, 戊己=土, 庚辛=金, 壬癸=水
+const STEM_ELEMENTS = {
+  '甲': 'Wood', '乙': 'Wood',
+  '丙': 'Fire', '丁': 'Fire',
+  '戊': 'Earth', '己': 'Earth',
+  '庚': 'Metal', '辛': 'Metal',
+  '壬': 'Water', '癸': 'Water'
+};
+
+const STEM_ELEMENTS_CN = {
+  '甲': '木', '乙': '木',
+  '丙': '火', '丁': '火',
+  '戊': '土', '己': '土',
+  '庚': '金', '辛': '金',
+  '壬': '水', '癸': '水'
+};
+
 // Zodiac mappings
 const ZODIAC = {
   '鼠': 'Rat', '牛': 'Ox', '虎': 'Tiger', '兔': 'Rabbit',
@@ -133,11 +151,15 @@ function getAlmanacData(date = new Date()) {
     },
     elements: {
       yearNaYin: lunar.getYearNaYin(),
-      yearElement: extractElement(lunar.getYearNaYin()),
+      yearNaYinElement: extractElement(lunar.getYearNaYin()),
       monthNaYin: lunar.getMonthNaYin(),
-      monthElement: extractElement(lunar.getMonthNaYin()),
+      monthNaYinElement: extractElement(lunar.getMonthNaYin()),
       dayNaYin: lunar.getDayNaYin(),
-      dayElement: extractElement(lunar.getDayNaYin())
+      dayNaYinElement: extractElement(lunar.getDayNaYin()),
+      // Day Stem element (五行) - the primary element of the day
+      dayStem: lunar.getDayInGanZhi().charAt(0),
+      dayElement: STEM_ELEMENTS[lunar.getDayInGanZhi().charAt(0)] || 'Unknown',
+      dayElementCn: STEM_ELEMENTS_CN[lunar.getDayInGanZhi().charAt(0)] || '?'
     },
     activities: {
       yi: lunar.getDayYi(),

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Chinese Almanac | Feng Shui Daily</title>
+    <meta name="description" content="Free daily Chinese almanac (通胜/黄历) with auspicious activities, lucky directions, and traditional wisdom.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a227;
+            --gold-light: #e8d48a;
+            --red: #a32020;
+            --red-light: #d64545;
+            --green: #2d6a4f;
+            --bg-dark: #1a1a2e;
+            --bg-card: #16213e;
+            --text-primary: #eee;
+            --text-secondary: #aaa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #0f0f23 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 2rem 1rem;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .date-western {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .date-chinese {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 0.5rem 0;
+            text-shadow: 0 2px 10px rgba(201, 162, 39, 0.3);
+        }
+        
+        .ganzhi {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            opacity: 0.8;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .element-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(201, 162, 39, 0.2), rgba(201, 162, 39, 0.1));
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+        
+        .element-icon {
+            font-size: 1.5rem;
+        }
+        
+        .element-name {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 600;
+        }
+        
+        .activities-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .activity-column h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .activity-column.good h4 { color: var(--green); }
+        .activity-column.avoid h4 { color: var(--red-light); }
+        
+        .activity-list {
+            list-style: none;
+        }
+        
+        .activity-list li {
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .activity-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-column.good .activity-list li::before {
+            content: '✓';
+            color: var(--green);
+        }
+        
+        .activity-column.avoid .activity-list li::before {
+            content: '✗';
+            color: var(--red-light);
+        }
+        
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .direction-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 12px;
+        }
+        
+        .direction-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .direction-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .direction-value {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1rem;
+            color: var(--gold-light);
+            margin-top: 0.25rem;
+        }
+        
+        .clash-warning {
+            background: linear-gradient(135deg, rgba(163, 32, 32, 0.2), rgba(163, 32, 32, 0.1));
+            border: 1px solid var(--red);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .clash-icon {
+            font-size: 2rem;
+        }
+        
+        .clash-text {
+            font-size: 0.9rem;
+        }
+        
+        .clash-zodiac {
+            color: var(--red-light);
+            font-weight: 600;
+        }
+        
+        .pengzu {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .solar-term {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        
+        .solar-term-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .solar-term-value {
+            font-family: 'Noto Serif SC', serif;
+            color: var(--gold-light);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-logo {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .footer-links a {
+            color: var(--gold-light);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(201, 162, 39, 0.2);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 400px) {
+            .date-chinese {
+                font-size: 2rem;
+            }
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="loading">
+            <div class="spinner"></div>
+            <p>Loading today's almanac...</p>
+        </div>
+    </div>
+
+    <script>
+        const elementEmoji = {
+            'Wood': '🌳', 'Fire': '🔥', 'Earth': '🏔️', 'Metal': '🔩', 'Water': '💧'
+        };
+        
+        const zodiacEmoji = {
+            'Rat': '🐀', 'Ox': '🐂', 'Tiger': '🐅', 'Rabbit': '🐇',
+            'Dragon': '🐉', 'Snake': '🐍', 'Horse': '🐎', 'Goat': '🐐',
+            'Monkey': '🐒', 'Rooster': '🐓', 'Dog': '🐕', 'Pig': '🐖'
+        };
+        
+        const chineseZodiacMap = {
+            '鼠': 'Rat', '牛': 'Ox', '虎': 'Tiger', '兔': 'Rabbit',
+            '龙': 'Dragon', '蛇': 'Snake', '马': 'Horse', '羊': 'Goat',
+            '猴': 'Monkey', '鸡': 'Rooster', '狗': 'Dog', '猪': 'Pig'
+        };
+        
+        // Static data - will be replaced by build script
+        const ALMANAC_DATA = {
+  "solar": {
+    "date": "2026-02-01",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "weekday": "日",
+    "weekdayEn": "Sunday",
+    "constellation": "水瓶"
+  },
+  "lunar": {
+    "year": 2025,
+    "month": 12,
+    "day": 14,
+    "monthCn": "腊",
+    "dayCn": "十四",
+    "ganZhiYear": "乙巳",
+    "ganZhiMonth": "己丑",
+    "ganZhiDay": "丙午",
+    "ganZhiHour": "戊子",
+    "zodiac": "蛇",
+    "zodiacEn": "Snake",
+    "isLeapMonth": false
+  },
+  "elements": {
+    "yearNaYin": "覆灯火",
+    "yearElement": "Fire",
+    "monthNaYin": "霹雳火",
+    "monthElement": "Fire",
+    "dayNaYin": "天河水",
+    "dayElement": "Water"
+  },
+  "activities": {
+    "yi": [
+      "沐浴",
+      "捕捉",
+      "畋猎",
+      "理发",
+      "整手足甲",
+      "入殓",
+      "除服",
+      "成服",
+      "破土",
+      "安葬",
+      "谢土",
+      "立碑",
+      "修坟",
+      "启钻"
+    ],
+    "ji": [
+      "纳采",
+      "订盟",
+      "嫁娶",
+      "上梁",
+      "开市",
+      "斋醮",
+      "盖屋",
+      "安门"
+    ],
+    "yiEn": [
+      "Bathing/Grooming",
+      "Hunting/Trapping",
+      "Hunting",
+      "Haircut",
+      "Nail Care",
+      "Placing in Coffin",
+      "Ending Mourning",
+      "Wearing Mourning",
+      "Breaking Ground",
+      "Burial",
+      "Thanking Earth",
+      "Erecting Monument",
+      "Repairing Grave",
+      "Opening Grave"
+    ],
+    "jiEn": [
+      "Proposing Marriage",
+      "Engagement",
+      "Wedding",
+      "Raising Beam",
+      "Opening Business",
+      "Fasting/Rituals",
+      "Building House",
+      "Installing Door"
+    ]
+  },
+  "gods": {
+    "xiShen": {
+      "direction": "坤",
+      "desc": "西南",
+      "directionEn": "Southwest (Kun)"
+    },
+    "fuShen": {
+      "direction": "乾",
+      "desc": "西北",
+      "directionEn": "Northwest (Qian)"
+    },
+    "caiShen": {
+      "direction": "坤",
+      "desc": "西南",
+      "directionEn": "Southwest (Kun)"
+    }
+  },
+  "clash": {
+    "chong": "子",
+    "chongDesc": "(庚子)鼠",
+    "sha": "北",
+    "shaEn": "North"
+  },
+  "solarTerms": {
+    "current": null,
+    "prev": "大寒",
+    "prevDate": "2026-01-20",
+    "next": "立春",
+    "nextDate": "2026-02-04"
+  },
+  "pengZu": {
+    "gan": "丙不修灶必见灾殃",
+    "zhi": "午不苫盖屋主更张"
+  },
+  "festivals": {
+    "lunar": [],
+    "solar": []
+  }
+};
+        
+        function formatDate(dateStr) {
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+        
+        function getChineseDate(data) {
+            return `${data.lunar.monthCn}月${data.lunar.dayCn}`;
+        }
+        
+        function render(data) {
+            const element = data.elements.dayElement;
+            const emoji = elementEmoji[element] || '☯️';
+            
+            // Extract zodiac from clash description
+            const clashDesc = data.clash.chongDesc;
+            const zodiacChar = clashDesc.match(/[鼠牛虎兔龙蛇马羊猴鸡狗猪]/)?.[0];
+            const zodiacEn = zodiacChar ? chineseZodiacMap[zodiacChar] : '';
+            const zodiacIcon = zodiacEn ? zodiacEmoji[zodiacEn] : '';
+            
+            document.getElementById('app').innerHTML = `
+                <header class="header">
+                    <p class="date-western">${formatDate(data.solar.date)}</p>
+                    <h1 class="date-chinese">${getChineseDate(data)}</h1>
+                    <p class="ganzhi">${data.lunar.ganZhiYear}年 ${data.lunar.ganZhiMonth}月 ${data.lunar.ganZhiDay}日</p>
+                </header>
+                
+                <div class="card">
+                    <div class="card-title">☯️ Today's Element</div>
+                    <div class="element-badge">
+                        <span class="element-icon">${emoji}</span>
+                        <span class="element-name">${element} · ${data.elements.dayNaYin}</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">📋 Activities</div>
+                    <div class="activities-grid">
+                        <div class="activity-column good">
+                            <h4>✨ Auspicious</h4>
+                            <ul class="activity-list">
+                                ${data.activities.yiEn.slice(0, 4).map(a => `<li>${a}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="activity-column avoid">
+                            <h4>⚠️ Avoid</h4>
+                            <ul class="activity-list">
+                                ${data.activities.jiEn.slice(0, 4).map(a => `<li>${a}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">🧭 Lucky Directions</div>
+                    <div class="directions-grid">
+                        <div class="direction-item">
+                            <div class="direction-icon">💰</div>
+                            <div class="direction-label">Wealth</div>
+                            <div class="direction-value">${data.gods.caiShen.directionEn}</div>
+                        </div>
+                        <div class="direction-item">
+                            <div class="direction-icon">😊</div>
+                            <div class="direction-label">Joy</div>
+                            <div class="direction-value">${data.gods.xiShen.directionEn}</div>
+                        </div>
+                        <div class="direction-item">
+                            <div class="direction-icon">🍀</div>
+                            <div class="direction-label">Fortune</div>
+                            <div class="direction-value">${data.gods.fuShen.directionEn}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">⚔️ Zodiac Clash</div>
+                    <div class="clash-warning">
+                        <div class="clash-icon">${zodiacIcon || '⚠️'}</div>
+                        <div class="clash-text">
+                            Those born in <span class="clash-zodiac">${clashDesc}</span> year should take extra care today.
+                            <br><small>Sha direction: ${data.clash.shaEn}</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">📜 Ancient Wisdom</div>
+                    <p class="pengzu">${data.pengZu.gan}</p>
+                    <p class="pengzu">${data.pengZu.zhi}</p>
+                </div>
+                
+                ${data.solarTerms.next ? `
+                <div class="card">
+                    <div class="card-title">🌸 Solar Terms</div>
+                    <div class="solar-term">
+                        <span class="solar-term-label">Next: ${data.solarTerms.next}</span>
+                        <span class="solar-term-value">${data.solarTerms.nextDate}</span>
+                    </div>
+                </div>
+                ` : ''}
+                
+                <footer class="footer">
+                    <div class="footer-logo">通胜 · Chinese Almanac</div>
+                    <p class="footer-links">
+                        Powered by <a href="https://github.com/tanchunsiong/fengshui-cli" target="_blank">fengshui-cli</a>
+                        <br>© ${new Date().getFullYear()} · Updates daily at midnight SGT
+                    </p>
+                </footer>
+            `;
+        }
+        
+        // Render immediately with static data
+        if (ALMANAC_DATA && ALMANAC_DATA.solar) {
+            render(ALMANAC_DATA);
+        } else {
+            document.getElementById('app').innerHTML = `
+                <div class="loading">
+                    <p>⚠️ Data not available. Please check back later.</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feng Shui Widget - Embeddable</title>
+    <style>
+        /* Minimal widget styles - paste into your site */
+        .fengshui-widget {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 12px;
+            padding: 1.25rem;
+            color: #eee;
+            max-width: 320px;
+            border: 1px solid rgba(201, 162, 39, 0.3);
+        }
+        .fengshui-widget .fs-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .fengshui-widget .fs-date {
+            font-size: 1.8rem;
+            color: #c9a227;
+            font-weight: bold;
+        }
+        .fengshui-widget .fs-ganzhi {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+        .fengshui-widget .fs-element {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: rgba(201, 162, 39, 0.15);
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .fengshui-widget .fs-element-icon {
+            font-size: 1.5rem;
+        }
+        .fengshui-widget .fs-element-text {
+            color: #e8d48a;
+        }
+        .fengshui-widget .fs-directions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        .fengshui-widget .fs-dir {
+            background: rgba(255,255,255,0.05);
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+        .fengshui-widget .fs-dir-icon {
+            font-size: 1.2rem;
+        }
+        .fengshui-widget .fs-dir-label {
+            color: #888;
+            font-size: 0.7rem;
+        }
+        .fengshui-widget .fs-dir-value {
+            color: #e8d48a;
+            font-size: 0.75rem;
+        }
+        .fengshui-widget .fs-footer {
+            text-align: center;
+            margin-top: 0.75rem;
+            font-size: 0.7rem;
+            color: #666;
+        }
+        .fengshui-widget .fs-footer a {
+            color: #c9a227;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body style="padding: 2rem; background: #0a0a0a;">
+    <h2 style="color: #fff; font-family: sans-serif; margin-bottom: 1rem;">Embeddable Widget Preview</h2>
+    
+    <!-- Copy this widget div to embed on your site -->
+    <div class="fengshui-widget" id="fengshui-widget">
+        Loading...
+    </div>
+
+    <script>
+        // Widget data - replace with your API call or static data
+        const WIDGET_DATA = {
+  "solar": {
+    "date": "2026-02-01",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "weekday": "日",
+    "weekdayEn": "Sunday",
+    "constellation": "水瓶"
+  },
+  "lunar": {
+    "year": 2025,
+    "month": 12,
+    "day": 14,
+    "monthCn": "腊",
+    "dayCn": "十四",
+    "ganZhiYear": "乙巳",
+    "ganZhiMonth": "己丑",
+    "ganZhiDay": "丙午",
+    "ganZhiHour": "戊子",
+    "zodiac": "蛇",
+    "zodiacEn": "Snake",
+    "isLeapMonth": false
+  },
+  "elements": {
+    "yearNaYin": "覆灯火",
+    "yearElement": "Fire",
+    "monthNaYin": "霹雳火",
+    "monthElement": "Fire",
+    "dayNaYin": "天河水",
+    "dayElement": "Water"
+  },
+  "activities": {
+    "yi": [
+      "沐浴",
+      "捕捉",
+      "畋猎",
+      "理发",
+      "整手足甲",
+      "入殓",
+      "除服",
+      "成服",
+      "破土",
+      "安葬",
+      "谢土",
+      "立碑",
+      "修坟",
+      "启钻"
+    ],
+    "ji": [
+      "纳采",
+      "订盟",
+      "嫁娶",
+      "上梁",
+      "开市",
+      "斋醮",
+      "盖屋",
+      "安门"
+    ],
+    "yiEn": [
+      "Bathing/Grooming",
+      "Hunting/Trapping",
+      "Hunting",
+      "Haircut",
+      "Nail Care",
+      "Placing in Coffin",
+      "Ending Mourning",
+      "Wearing Mourning",
+      "Breaking Ground",
+      "Burial",
+      "Thanking Earth",
+      "Erecting Monument",
+      "Repairing Grave",
+      "Opening Grave"
+    ],
+    "jiEn": [
+      "Proposing Marriage",
+      "Engagement",
+      "Wedding",
+      "Raising Beam",
+      "Opening Business",
+      "Fasting/Rituals",
+      "Building House",
+      "Installing Door"
+    ]
+  },
+  "gods": {
+    "xiShen": {
+      "direction": "坤",
+      "desc": "西南",
+      "directionEn": "Southwest (Kun)"
+    },
+    "fuShen": {
+      "direction": "乾",
+      "desc": "西北",
+      "directionEn": "Northwest (Qian)"
+    },
+    "caiShen": {
+      "direction": "坤",
+      "desc": "西南",
+      "directionEn": "Southwest (Kun)"
+    }
+  },
+  "clash": {
+    "chong": "子",
+    "chongDesc": "(庚子)鼠",
+    "sha": "北",
+    "shaEn": "North"
+  },
+  "solarTerms": {
+    "current": null,
+    "prev": "大寒",
+    "prevDate": "2026-01-20",
+    "next": "立春",
+    "nextDate": "2026-02-04"
+  },
+  "pengZu": {
+    "gan": "丙不修灶必见灾殃",
+    "zhi": "午不苫盖屋主更张"
+  },
+  "festivals": {
+    "lunar": [],
+    "solar": []
+  }
+};
+
+        const elementEmoji = {
+            'Wood': '🌳', 'Fire': '🔥', 'Earth': '🏔️', 'Metal': '🔩', 'Water': '💧'
+        };
+
+        function renderWidget(data) {
+            const el = data.elements.dayElement;
+            const emoji = elementEmoji[el] || '☯️';
+            
+            document.getElementById('fengshui-widget').innerHTML = `
+                <div class="fs-header">
+                    <div class="fs-date">${data.lunar.monthCn}月${data.lunar.dayCn}</div>
+                    <div class="fs-ganzhi">${data.lunar.ganZhiDay} · ${data.solar.weekdayEn}</div>
+                </div>
+                <div class="fs-element">
+                    <span class="fs-element-icon">${emoji}</span>
+                    <span class="fs-element-text">${el} · ${data.elements.dayNaYin}</span>
+                </div>
+                <div class="fs-directions">
+                    <div class="fs-dir">
+                        <div class="fs-dir-icon">💰</div>
+                        <div class="fs-dir-label">Wealth</div>
+                        <div class="fs-dir-value">${data.gods.caiShen.directionEn.split(' ')[0]}</div>
+                    </div>
+                    <div class="fs-dir">
+                        <div class="fs-dir-icon">😊</div>
+                        <div class="fs-dir-label">Joy</div>
+                        <div class="fs-dir-value">${data.gods.xiShen.directionEn.split(' ')[0]}</div>
+                    </div>
+                    <div class="fs-dir">
+                        <div class="fs-dir-icon">🍀</div>
+                        <div class="fs-dir-label">Fortune</div>
+                        <div class="fs-dir-value">${data.gods.fuShen.directionEn.split(' ')[0]}</div>
+                    </div>
+                </div>
+                <div class="fs-footer">
+                    <a href="https://github.com/tanchunsiong/fengshui-cli" target="_blank">通胜 · fengshui-cli</a>
+                </div>
+            `;
+        }
+
+        if (WIDGET_DATA && WIDGET_DATA.solar) {
+            renderWidget(WIDGET_DATA);
+        }
+    </script>
+    
+    <div style="margin-top: 2rem; color: #aaa; font-family: monospace; font-size: 0.85rem;">
+        <h3 style="color: #c9a227;">How to embed:</h3>
+        <p>1. Copy the CSS from &lt;style&gt; tag</p>
+        <p>2. Copy the widget div</p>
+        <p>3. Replace WIDGET_DATA with your data (fetch from API or generate daily)</p>
+        <p>4. Or use an iframe: <code style="color: #e8d48a;">&lt;iframe src="widget.html" width="340" height="280"&gt;&lt;/iframe&gt;</code></p>
+    </div>
+</body>
+</html>

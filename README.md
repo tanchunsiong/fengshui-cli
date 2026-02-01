@@ -95,6 +95,36 @@ const weddingDates = findAuspiciousDates('嫁娶', 30);
 // Returns array of dates where wedding is auspicious
 ```
 
+## 🌐 Web Demo & Widget
+
+**Live Demo:** [tanchunsiong.github.io/fengshui-cli](https://tanchunsiong.github.io/fengshui-cli)
+
+### Embeddable Widget
+
+A compact, stylish widget you can embed on any website:
+
+```html
+<iframe 
+  src="https://tanchunsiong.github.io/fengshui-cli/widget.html" 
+  width="340" 
+  height="300" 
+  frameborder="0"
+  style="border-radius: 12px;">
+</iframe>
+```
+
+### Build Your Own
+
+Generate fresh static pages with today's data:
+
+```bash
+node build-web.js
+```
+
+This updates `docs/index.html` and `docs/widget.html` with the current almanac. Run daily via cron for a self-updating site.
+
+---
+
 ## API Server
 
 Start a JSON API for web/mobile apps:

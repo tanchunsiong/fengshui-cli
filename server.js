@@ -10,6 +10,7 @@
 const http = require('http');
 const url = require('url');
 const lib = require('./lib');
+const bazi = require('./bazi');
 
 const PORT = process.env.PORT || process.argv[2] || 3888;
 
@@ -33,7 +34,7 @@ const routes = {
   '/': (req, res) => {
     sendJSON(res, {
       name: 'fengshui-cli API',
-      version: '1.0.0',
+      version: '1.1.0',
       endpoints: {
         '/': 'This help',
         '/today': 'Today\'s almanac',
@@ -41,9 +42,14 @@ const routes = {
         '/range/:start/:end': 'Almanac for date range',
         '/find/:activity': 'Find auspicious dates for activity',
         '/post/:platform': 'Social media post (twitter/general)',
-        '/image': 'Image generation data'
+        '/image': 'Image generation data',
+        '/bazi/:YYYY-MM-DD': 'Four Pillars of Destiny (BaZi) chart',
+        '/bazi/:YYYY-MM-DD/:HH:MM': 'BaZi with birth time'
       },
-      example: '/date/2026-02-14'
+      examples: {
+        almanac: '/date/2026-02-14',
+        bazi: '/bazi/1990-05-15/14:30'
+      }
     });
   },
   
@@ -125,6 +131,22 @@ function handleRequest(req, res) {
     return sendJSON(res, { platform, date: data.solar.date, post });
   }
   
+  // /bazi/YYYY-MM-DD or /bazi/YYYY-MM-DD/HH:MM
+  const baziMatch = path.match(/^\/bazi\/(\d{4}-\d{2}-\d{2})(?:\/(\d{1,2}):(\d{2}))?$/);
+  if (baziMatch) {
+    try {
+      const [year, month, day] = baziMatch[1].split('-').map(Number);
+      const hour = baziMatch[2] ? parseInt(baziMatch[2]) : (query.hour ? parseInt(query.hour) : 12);
+      const minute = baziMatch[3] ? parseInt(baziMatch[3]) : (query.minute ? parseInt(query.minute) : 0);
+      const gender = query.gender || 'male';
+      
+      const data = bazi.getBaZiJSON(year, month, day, hour, minute, gender);
+      return sendJSON(res, data);
+    } catch (e) {
+      return sendError(res, 'Invalid birth date: ' + e.message);
+    }
+  }
+  
   // 404
   sendError(res, 'Not found. Try / for API docs.', 404);
 }
@@ -133,8 +155,8 @@ const server = http.createServer(handleRequest);
 
 server.listen(PORT, () => {
   console.log(`
-🔮 fengshui-cli API Server
-━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔮 fengshui-cli API Server v1.1.0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Listening on http://localhost:${PORT}
 
@@ -146,6 +168,8 @@ Endpoints:
   GET /find/activity     Find auspicious dates
   GET /post/twitter      Social media post
   GET /image             Image generation data
+  GET /bazi/YYYY-MM-DD   Four Pillars (BaZi) chart
+  GET /bazi/YYYY-MM-DD/HH:MM  BaZi with birth time
 
 Press Ctrl+C to stop
 `);

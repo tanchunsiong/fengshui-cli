@@ -13,6 +13,7 @@ Chinese Almanac (通胜/黄历) CLI & API - Traditional feng shui calendar data 
 - 🐲 **Gan Zhi** - Traditional stem-branch calendar (干支)
 - 💰 **Deity Directions** - Wealth God, Fortune God, Joy God positions
 - 🔍 **Date Finder** - Find auspicious dates for specific activities
+- 🔮 **BaZi Calculator** - Four Pillars of Destiny (八字命盘) based on birth date/time
 - 🌐 **API Server** - Built-in JSON API for web apps
 - 🌙 **Festivals** - Lunar and solar festival detection
 
@@ -46,6 +47,46 @@ fengshui find 嫁娶 60
 
 # Start API server
 fengshui server 3888
+
+# BaZi (Four Pillars) calculator
+fengshui bazi 1990-05-15 14:30
+
+# BaZi as JSON
+fengshui bazi json 1990-05-15 14:30
+```
+
+## 🔮 BaZi Calculator (八字命盘)
+
+Calculate your Four Pillars of Destiny based on birth date and time:
+
+```bash
+fengshui bazi 1990-05-15 14:30
+```
+
+This returns:
+- **Four Pillars** (年柱 月柱 日柱 時柱) - Year, Month, Day, Hour
+- **Day Master** (日主) - Your core personality based on day stem
+- **Five Elements Distribution** - Balance of Wood, Fire, Earth, Metal, Water
+- **Lucky/Unlucky Elements** - Elements that support or challenge you
+- **Major Life Cycles** (大運) - 10-year periods and their influences
+
+### Web Calculator
+
+Try the interactive BaZi calculator: [tanchunsiong.github.io/fengshui-cli/bazi.html](https://tanchunsiong.github.io/fengshui-cli/bazi.html)
+
+### Programmatic Usage
+
+```javascript
+const { calculateBaZi, getBaZiJSON } = require('fengshui-cli/bazi');
+
+// Calculate BaZi
+const bazi = calculateBaZi(1990, 5, 15, 14, 30);
+console.log(bazi.dayMaster.stem);      // "庚"
+console.log(bazi.dayMaster.info.english);  // "Yang Metal"
+console.log(bazi.elements);            // { Wood: 0, Fire: 2, ... }
+
+// JSON format for API
+const json = getBaZiJSON(1990, 5, 15, 14, 30);
 ```
 
 ### Output Example
@@ -144,6 +185,8 @@ fengshui server 3888
 | `GET /find/:activity` | Find auspicious dates |
 | `GET /post/:platform` | Social media post |
 | `GET /image` | Image generation data |
+| `GET /bazi/YYYY-MM-DD` | BaZi chart (noon default) |
+| `GET /bazi/YYYY-MM-DD/HH:MM` | BaZi with birth time |
 
 ### Example Response
 

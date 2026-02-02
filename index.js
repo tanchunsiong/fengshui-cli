@@ -7,6 +7,7 @@
  */
 
 const lib = require('./lib');
+const bazi = require('./bazi');
 const path = require('path');
 
 const args = process.argv.slice(2);
@@ -25,6 +26,8 @@ Commands:
   date YYYY-MM-DD    Show almanac for specific date
   range START END    Show almanac for date range
   find ACTIVITY [N]  Find next N days with auspicious activity
+  bazi YYYY-MM-DD [HH:MM]   Calculate Four Pillars of Destiny
+  bazi json YYYY-MM-DD [HH:MM]  BaZi as JSON
   server [port]      Start API server (default: 3888)
   help               Show this help
 
@@ -34,6 +37,7 @@ Examples:
   fengshui post twitter     # Twitter-ready post
   fengshui date 2026-02-14  # Valentine's Day almanac
   fengshui find 嫁娶 60     # Wedding dates in next 60 days
+  fengshui bazi 1990-05-15 14:30  # Birth chart
   fengshui server 8080      # Start API on port 8080
 
 Programmatic Usage:
@@ -118,6 +122,48 @@ switch (command) {
       console.log('\nCommon activities:');
       console.log('  嫁娶 (Wedding)   祈福 (Praying)   出行 (Traveling)');
       console.log('  开市 (Business)  入宅 (Moving)    动土 (Construction)');
+    }
+    break;
+    
+  case 'bazi':
+  case 'fourpillars':
+  case '八字':
+    // BaZi (Four Pillars) calculator
+    const baziJsonMode = args[1] === 'json';
+    const baziDateArg = baziJsonMode ? args[2] : args[1];
+    const baziTimeArg = baziJsonMode ? args[3] : args[2];
+    
+    if (!baziDateArg) {
+      console.log('Usage: fengshui bazi YYYY-MM-DD [HH:MM]');
+      console.log('       fengshui bazi json YYYY-MM-DD [HH:MM]');
+      console.log('Example: fengshui bazi 1990-05-15 14:30');
+      break;
+    }
+    
+    const baziParts = baziDateArg.split('-').map(Number);
+    if (baziParts.length !== 3) {
+      console.log('Error: Invalid date format. Use YYYY-MM-DD');
+      break;
+    }
+    
+    let [baziYear, baziMonth, baziDay] = baziParts;
+    let baziHour = 12, baziMinute = 0;
+    
+    if (baziTimeArg) {
+      const timeParts = baziTimeArg.split(':').map(Number);
+      baziHour = timeParts[0] || 12;
+      baziMinute = timeParts[1] || 0;
+    }
+    
+    try {
+      if (baziJsonMode) {
+        console.log(JSON.stringify(bazi.getBaZiJSON(baziYear, baziMonth, baziDay, baziHour, baziMinute), null, 2));
+      } else {
+        const baziResult = bazi.calculateBaZi(baziYear, baziMonth, baziDay, baziHour, baziMinute);
+        console.log(bazi.formatBaZi(baziResult));
+      }
+    } catch (e) {
+      console.log('Error calculating BaZi:', e.message);
     }
     break;
     

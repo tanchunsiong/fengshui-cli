@@ -322,24 +322,24 @@
         // Static data - will be replaced by build script
         const ALMANAC_DATA = {
   "solar": {
-    "date": "2026-02-02",
+    "date": "2026-02-03",
     "year": 2026,
     "month": 2,
-    "day": 2,
-    "weekday": "一",
-    "weekdayEn": "Monday",
+    "day": 3,
+    "weekday": "二",
+    "weekdayEn": "Tuesday",
     "constellation": "水瓶"
   },
   "lunar": {
     "year": 2025,
     "month": 12,
-    "day": 15,
+    "day": 16,
     "monthCn": "腊",
-    "dayCn": "十五",
+    "dayCn": "十六",
     "ganZhiYear": "乙巳",
     "ganZhiMonth": "己丑",
-    "ganZhiDay": "丁未",
-    "ganZhiHour": "庚子",
+    "ganZhiDay": "戊申",
+    "ganZhiHour": "壬子",
     "zodiac": "蛇",
     "zodiacEn": "Snake",
     "isLeapMonth": false
@@ -349,58 +349,82 @@
     "yearNaYinElement": "Fire",
     "monthNaYin": "霹雳火",
     "monthNaYinElement": "Fire",
-    "dayNaYin": "天河水",
-    "dayNaYinElement": "Water",
-    "dayStem": "丁",
-    "dayElement": "Fire",
-    "dayElementCn": "火"
+    "dayNaYin": "大驿土",
+    "dayNaYinElement": "Earth",
+    "dayStem": "戊",
+    "dayElement": "Earth",
+    "dayElementCn": "土"
   },
   "activities": {
     "yi": [
-      "祭祀",
-      "破屋",
-      "坏垣",
-      "馀事勿取"
+      "沐浴",
+      "开仓",
+      "出货财",
+      "开市",
+      "交易",
+      "立券",
+      "纳财",
+      "栽种",
+      "纳畜",
+      "牧养",
+      "畋猎",
+      "入殓",
+      "破土",
+      "安葬"
     ],
     "ji": [
-      "斋醮",
+      "祈福",
       "嫁娶",
-      "开市"
+      "安床",
+      "入宅",
+      "造船"
     ],
     "yiEn": [
-      "Sacrifices/Worship",
-      "破屋",
-      "坏垣",
-      "馀事勿取"
+      "Bathing/Grooming",
+      "开仓",
+      "出货财",
+      "Opening Business",
+      "Trading",
+      "Signing Contracts",
+      "Collecting Money",
+      "Planting",
+      "Acquiring Livestock",
+      "牧养",
+      "Hunting",
+      "Placing in Coffin",
+      "Breaking Ground",
+      "Burial"
     ],
     "jiEn": [
-      "Fasting/Rituals",
+      "Praying",
       "Wedding",
-      "Opening Business"
+      "Installing Bed",
+      "Moving In",
+      "造船"
     ]
   },
   "gods": {
     "xiShen": {
-      "direction": "离",
-      "desc": "正南",
-      "directionEn": "South (Li)"
-    },
-    "fuShen": {
       "direction": "巽",
       "desc": "东南",
       "directionEn": "Southeast (Xun)"
     },
+    "fuShen": {
+      "direction": "艮",
+      "desc": "东北",
+      "directionEn": "Northeast (Gen)"
+    },
     "caiShen": {
-      "direction": "坤",
-      "desc": "西南",
-      "directionEn": "Southwest (Kun)"
+      "direction": "坎",
+      "desc": "正北",
+      "directionEn": "North (Kan)"
     }
   },
   "clash": {
-    "chong": "丑",
-    "chongDesc": "(辛丑)牛",
-    "sha": "西",
-    "shaEn": "West"
+    "chong": "寅",
+    "chongDesc": "(壬寅)虎",
+    "sha": "南",
+    "shaEn": "South"
   },
   "solarTerms": {
     "current": null,
@@ -410,8 +434,8 @@
     "nextDate": "2026-02-04"
   },
   "pengZu": {
-    "gan": "丁不剃头头必生疮",
-    "zhi": "未不服药毒气入肠"
+    "gan": "戊不受田田主不祥",
+    "zhi": "申不安床鬼祟入房"
   },
   "festivals": {
     "lunar": [],
@@ -527,8 +551,6 @@
                 <footer class="footer">
                     <div class="footer-logo">通胜 · Chinese Almanac</div>
                     <p class="footer-links">
-                        <a href="bazi.html">🔮 八字命盘 BaZi Calculator</a>
-                        <br><br>
                         Powered by <a href="https://github.com/tanchunsiong/fengshui-cli" target="_blank">fengshui-cli</a>
                         <br>© ${new Date().getFullYear()} · Updates daily at midnight SGT
                     </p>
